@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { ActionPanel, Action, Icon, Grid, Color } from "@raycast/api";
+import { ActionPanel, Action, Grid, Color } from "@raycast/api";
+import { glyphs } from "./glyphs";
 
 export default function Command() {
   const [itemSize, setItemSize] = useState<Grid.ItemSize>(Grid.ItemSize.Medium);
@@ -25,15 +26,18 @@ export default function Command() {
       }
     >
       {!isLoading &&
-        Object.entries(Icon).map(([name, icon]) => (
+        Object.entries(glyphs).map(([name, glyph]) => (
           <Grid.Item
             key={name}
-            content={{ value: { source: icon, tintColor: Color.PrimaryText }, tooltip: name }}
+            content={{
+              value: { source: String.fromCharCode(parseInt(glyph, 16)), tintColor: Color.PrimaryText },
+              tooltip: name,
+            }}
             title={name}
-            subtitle={icon}
+            subtitle={glyph}
             actions={
               <ActionPanel>
-                <Action.CopyToClipboard content={icon} />
+                <Action.CopyToClipboard content={glyph} />
               </ActionPanel>
             }
           />
